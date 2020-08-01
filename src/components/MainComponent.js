@@ -8,6 +8,7 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { addComment } from "../redux/ActionCreator";
 
 const mapStoreToProps = (state) => {
   return {
@@ -17,6 +18,12 @@ const mapStoreToProps = (state) => {
     promotions: state.promotions,
   };
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) =>
+    dispatch(addComment(dishId, rating, author, comment)),
+});
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -45,6 +52,7 @@ class Main extends Component {
           comments={this.props.comments.filter(
             (comment) => comment.id === parseInt(match.params.dishId, 10)
           )}
+          addComment={this.props.addComment}
         />
       );
     };
@@ -59,7 +67,7 @@ class Main extends Component {
             path="/menu"
             component={() => <Menu dishes={this.props.dishes} />}
           />
-          <Route path="/menu/:dishID" component={DishWithId} />
+          <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/contactus" component={Contact} />
           <Route
             exact
@@ -74,4 +82,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStoreToProps)(Main));
+export default withRouter(connect(mapStoreToProps, mapDispatchToProps)(Main));

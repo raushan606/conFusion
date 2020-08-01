@@ -62,7 +62,7 @@ function RenderComments({ comments, addComment, dishId }) {
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
         <ul className="list-unstyled">{list}</ul>
-        <CommentForm dishId={dishId} addComment={addComment}></CommentForm>
+        <CommentForm dishId={dishId} addComment={addComment}/>
       </div>
     );
   } else {
